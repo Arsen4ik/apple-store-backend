@@ -100,6 +100,8 @@ export const createHeadphones = async (data: Headphones) => {
     const { headphones, gadget } = data
     try {
         const newGadget = await createGadget(gadget);
+        console.log(data, newGadget);
+
         const newHeadphones = await db.headphones.create({
             data: {
                 ...headphones,
