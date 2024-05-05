@@ -15,12 +15,9 @@ import db from './db'
 // }) => {
 const createGadget = async (data: Gadget) => {
     try {
-        console.log(data);
         const newGadget = await db.gadget.create({
             data
         })
-        console.log(newGadget);
-
         return newGadget
     } catch (e) {
         console.error('create gadget error: ', e);
@@ -102,10 +99,7 @@ export const createComputer = async (data: Computer) => {
 export const createHeadphones = async (data: Headphones) => {
     const { headphones, gadget } = data
     try {
-        console.log(gadget);
         const newGadget = await createGadget(gadget);
-        // console.log(data, newGadget);
-
         const newHeadphones = await db.headphones.create({
             data: {
                 ...headphones,
