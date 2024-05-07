@@ -1,11 +1,11 @@
 export interface Gadget {
     name: string;
     price: number;
-    discountPrice: number;
+    discountPrice?: number;
     guarantee: number;
     rating: number;
     isAvailable: true;
-    storeAddress: string;
+    storeAddress?: string;
     color: string;
     brand: string;
     country: string;

@@ -4,7 +4,7 @@ const isValidGadget = (gadget: Gadget): gadget is Gadget => {
     return (
         typeof gadget.name === 'string' &&
         typeof gadget.price === 'number' &&
-        typeof gadget.discountPrice === 'number' &&
+        (gadget.discountPrice ? typeof gadget.discountPrice === 'number' : true) &&
         typeof gadget.guarantee === 'number' &&
         typeof gadget.rating === 'number' &&
         typeof gadget.isAvailable === 'boolean' &&
