@@ -7,6 +7,7 @@ const isValidGadget = (gadget: Gadget): gadget is Gadget => {
         (gadget.discountPrice ? typeof gadget.discountPrice === 'number' : true) &&
         typeof gadget.guarantee === 'number' &&
         typeof gadget.rating === 'number' &&
+        typeof gadget.CountReview === 'number' &&
         typeof gadget.isAvailable === 'boolean' &&
         (gadget.storeAddress ? typeof gadget.storeAddress === 'string' : true) &&
         typeof gadget.color === 'string' &&

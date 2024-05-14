@@ -6,6 +6,7 @@ CREATE TABLE "Gadget" (
     "discountPrice" INTEGER,
     "guarantee" INTEGER NOT NULL,
     "rating" DOUBLE PRECISION NOT NULL,
+    "CountReview" INTEGER NOT NULL,
     "isAvailable" BOOLEAN NOT NULL,
     "storeAddress" TEXT,
     "color" TEXT NOT NULL,
@@ -71,6 +72,15 @@ CREATE TABLE "Accessories" (
     CONSTRAINT "Accessories_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "Images" (
+    "id" SERIAL NOT NULL,
+    "gadgetId" INTEGER NOT NULL,
+    "imageLink" TEXT NOT NULL,
+
+    CONSTRAINT "Images_pkey" PRIMARY KEY ("id")
+);
+
 -- AddForeignKey
 ALTER TABLE "Phone" ADD CONSTRAINT "Phone_gadgetId_fkey" FOREIGN KEY ("gadgetId") REFERENCES "Gadget"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
@@ -85,3 +95,6 @@ ALTER TABLE "Computer" ADD CONSTRAINT "Computer_gadgetId_fkey" FOREIGN KEY ("gad
 
 -- AddForeignKey
 ALTER TABLE "Accessories" ADD CONSTRAINT "Accessories_gadgetId_fkey" FOREIGN KEY ("gadgetId") REFERENCES "Gadget"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Images" ADD CONSTRAINT "Images_gadgetId_fkey" FOREIGN KEY ("gadgetId") REFERENCES "Gadget"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

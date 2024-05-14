@@ -4,6 +4,7 @@ export interface Gadget {
     discountPrice?: number;
     guarantee: number;
     rating: number;
+    CountReview: number;
     isAvailable: true;
     storeAddress?: string;
     color: string;

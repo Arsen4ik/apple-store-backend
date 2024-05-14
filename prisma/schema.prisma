@@ -15,6 +15,7 @@ model Gadget {
   discountPrice Int?
   guarantee     Int
   rating        Float
+  CountReview   Int
   isAvailable   Boolean
   storeAddress  String?
   color         String
@@ -25,6 +26,7 @@ model Gadget {
   tablet        Tablet[]
   computer      Computer[]
   accessories   Accessories[]
+  images        Images[]
 }
 
 model Phone {
@@ -71,4 +73,11 @@ model Accessories {
   gadget                Gadget @relation(fields: [gadgetId], references: [id])
   gadgetId              Int
   forWhatKindsOfDevises String
+}
+
+model Images {
+  id        Int    @id @default(autoincrement())
+  gadget    Gadget @relation(fields: [gadgetId], references: [id])
+  gadgetId  Int
+  imageLink String
 }

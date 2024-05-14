@@ -131,3 +131,44 @@ export const createAccessories = async (data: Accessories) => {
         console.error('create accessories error: ', e);
     }
 }
+
+
+
+
+
+export const createImage = async (gadgetId: number, imageLink: string) => {
+    try {
+        const gadgetToFind = await db.gadget.findFirst({
+            where: {
+                id: gadgetId
+            }
+        })
+        // console.log(id);
+        if (!gadgetToFind) return { message: 'gadget with this id was not found!' }
+        const newImage = await db.images.create({
+            data: {
+                imageLink,
+                gadget: {
+                    connect: { id: gadgetToFind.id }
+                }
+            }
+        })
+        return newImage
+    } catch (e) {
+        console.error('gadget with this id was not found!', e);
+    }
+}
+
+export async function getPhoneWithImagesAndGadget() {
+    const phoneWithImagesAndGadget = await db.phone.findMany({
+        include: {
+            gadget: {
+                include: {
+                    images: true,
+                },
+            },
+        },
+    });
+
+    return phoneWithImagesAndGadget;
+}
