@@ -3,76 +3,43 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  // url      = env("DATABASE_URL")
-  url      = env("POSTGRES_PRISMA_URL")
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// enum ANY {
+//   Int
+//   String
+//   Float
+//   Boolean
+// }
+
+model Categories {
+  id      Int      @id @default(autoincrement())
+  name    String
+  gadgets Gadget[]
 }
 
 model Gadget {
-  id            Int           @id @default(autoincrement())
+  id            Int     @id @default(autoincrement())
   name          String
   price         Int
   discountPrice Int?
   guarantee     Int
   rating        Float
-  CountReview   Int
+  countReview   Int
   isAvailable   Boolean
   storeAddress  String?
   color         String
   brand         String
   country       String
-  phone         Phone[]
-  headphones    Headphones[]
-  tablet        Tablet[]
-  computer      Computer[]
-  accessories   Accessories[]
-  images        Images[]
-}
 
-model Phone {
-  id         Int    @id @default(autoincrement())
-  gadget     Gadget @relation(fields: [gadgetId], references: [id])
-  gadgetId   Int
-  screenSize Int
-  screenName String
-  memoryGB   Int
-  ramGB      Int
-  camera     String
-}
+  categoryId Int
+  category   Categories @relation(fields: [categoryId], references: [id])
 
-model Headphones {
-  id                        Int     @id @default(autoincrement())
-  gadget                    Gadget  @relation(fields: [gadgetId], references: [id])
-  gadgetId                  Int
-  isNoiseReductionAvailable Boolean
-}
+  images Images[]
 
-model Tablet {
-  id         Int    @id @default(autoincrement())
-  gadget     Gadget @relation(fields: [gadgetId], references: [id])
-  gadgetId   Int
-  screenSize Int
-  screenName String
-  memoryGB   Int
-  ramGB      Int
-}
-
-model Computer {
-  id         Int    @id @default(autoincrement())
-  gadget     Gadget @relation(fields: [gadgetId], references: [id])
-  gadgetId   Int
-  screenSize Int
-  memoryGB   Int
-  ramGB      Int
-  OS         String
-  CPU        String
-}
-
-model Accessories {
-  id                    Int    @id @default(autoincrement())
-  gadget                Gadget @relation(fields: [gadgetId], references: [id])
-  gadgetId              Int
-  forWhatKindsOfDevises String
+  gadgetSpecialCharacteristics GadgetSpecialCharacteristics[]
 }
 
 model Images {
@@ -80,4 +47,19 @@ model Images {
   gadget    Gadget @relation(fields: [gadgetId], references: [id])
   gadgetId  Int
   imageLink String
+}
+
+model Characteristics {
+  id                           Int                            @id @default(autoincrement())
+  name                         String
+  gadgetSpecialCharacteristics GadgetSpecialCharacteristics[]
+}
+
+model GadgetSpecialCharacteristics {
+  id                Int             @id @default(autoincrement())
+  gadget            Gadget          @relation(fields: [gadgetId], references: [id])
+  gadgetId          Int
+  characteristics   Characteristics @relation(fields: [characteristicsId], references: [id])
+  characteristicsId Int
+  value             String
 }
