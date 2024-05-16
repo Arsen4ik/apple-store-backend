@@ -52,6 +52,7 @@ model Images {
 model Characteristics {
   id                           Int                            @id @default(autoincrement())
   name                         String
+  unitType                     String
   gadgetSpecialCharacteristics GadgetSpecialCharacteristics[]
 }
 

@@ -1,6 +1,5 @@
 import { Router } from 'express'
-// import { isValidAccessories, isValidComputer, isValidHeadphones, isValidPhone, isValidTablet } from './types/validations'
-// import { createAccessories, createComputer, createHeadphones, createImage, createPhone, createTablet, getPhoneWithImagesAndGadget } from './utils/actions';
+import { createCategory, createCharacteristic, createGadget, createGadgetSpecialCharacteristics, createImage, getAllGadgets } from './utils/actions'
 
 const router = Router()
 
@@ -8,49 +7,45 @@ router.get('/', (_, res) => {
     res.json({ 'msg': 'gg lol' })
 })
 
-// router.post('/tablet', async (req, res) => {
-//     const { tablet, gadget } = req.body
-//     const data = isValidTablet({ tablet, gadget }) ? await createTablet({ tablet, gadget }) : { message: 'tablet was not created' }
-//     res.json(data)
-// })
+router.post('/category', async (req, res) => {
+    const { category } = req.body
+    const data = await createCategory(category)
+    res.json(data)
+})
 
-// router.post('/phone', async (req, res) => {
-//     const { phone, gadget } = req.body
-//     const data = isValidPhone({ phone, gadget }) ? await createPhone({ phone, gadget }) : { message: 'phone was not created' }
-//     res.json(data)
-// })
+router.post('/characteristic', async (req, res) => {
+    const { characteristic, unitType } = req.body
+    const data = await createCharacteristic(characteristic, unitType)
+    res.json(data)
+})
 
+router.post('/gadget', async (req, res) => {
+    const { gadget, categoryId } = req.body
+    const data = await createGadget(gadget, categoryId)
+    res.json(data)
+})
 
-// router.get('/phone', async (_, res) => {
-//     const data = await getPhoneWithImagesAndGadget()
-//     res.json(data)
-// })
+router.post('/gadget', async (req, res) => {
+    const { gadget, categoryId } = req.body
+    const data = await createGadget(gadget, categoryId)
+    res.json(data)
+})
 
+router.post('/image', async (req, res) => {
+    const { imageLink, gadgetId } = req.body
+    const data = await createImage(imageLink, gadgetId)
+    res.json(data)
+})
 
-// router.post('/image', async (req, res) => {
-//     const { gadgetId, imageLink } = req.body
-//     const data = (typeof gadgetId === 'number' && typeof imageLink === 'string') ? await createImage(gadgetId, imageLink) : { message: 'image was not created' }
-//     res.json(data)
-// })
+router.post('/gadgetSpecialCharacteristics', async (req, res) => {
+    const { value, gadgetId, characteristicId } = req.body
+    const data = await createGadgetSpecialCharacteristics(value, gadgetId, characteristicId)
+    res.json(data)
+})
 
-
-
-// router.post('/computer', async (req, res) => {
-//     const { computer, gadget } = req.body
-//     const data = isValidComputer({ computer, gadget }) ? await createComputer({ computer, gadget }) : { message: 'computer was not created' }
-//     res.json(data)
-// })
-
-// router.post('/headphones', async (req, res) => {
-//     const { headphones, gadget } = req.body
-//     const data = isValidHeadphones({ headphones, gadget }) ? await createHeadphones({ headphones, gadget }) : { message: 'headphones was not created' }
-//     res.json(data)
-// })
-
-// router.post('/accessories', async (req, res) => {
-//     const { accessories, gadget } = req.body
-//     const data = isValidAccessories({ accessories, gadget }) ? await createAccessories({ accessories, gadget }) : { message: 'accessories was not created' }
-//     res.json(data)
-// })
+router.get('/allGadgets', async (_, res) => {
+    const data = await getAllGadgets()
+    res.json(data)
+})
 
 export default router;
