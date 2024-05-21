@@ -1,10 +1,10 @@
 import { Router } from 'express'
-import { createCategory, createCharacteristic, createGadget, createGadgetSpecialCharacteristics, createImage, getAllGadgets } from './utils/actions'
+import { createCategory, createCharacteristic, createGadget, createGadgetSpecialCharacteristics, createImage, getAllGadgets, getAllProcuctsByCategory, getProcuctById } from './utils/actions'
 
 const router = Router()
 
 router.get('/', (_, res) => {
-    res.json({ 'msg': 'gg lol' })
+    res.json({ 'project name': 'apple store backend' })
 })
 
 router.post('/category', async (req, res) => {
@@ -45,6 +45,16 @@ router.post('/gadgetSpecialCharacteristics', async (req, res) => {
 
 router.get('/allGadgets', async (_, res) => {
     const data = await getAllGadgets()
+    res.json(data)
+})
+
+router.get('/all-products-by-category/:category', async (req, res) => {
+    const data = await getAllProcuctsByCategory(req.params.category)
+    res.json(data)
+})
+
+router.get('/product/:id', async (req, res) => {
+    const data = await getProcuctById(+req.params.id)
     res.json(data)
 })
 

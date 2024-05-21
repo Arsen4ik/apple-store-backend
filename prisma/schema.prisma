@@ -1,3 +1,70 @@
+// generator client {
+//   provider = "prisma-client-js"
+// }
+
+// datasource db {
+//   provider = "sqlite"
+//   url      = env("DATABASE_URL")
+// }
+
+// // enum ANY {
+// //   Int
+// //   String
+// //   Float
+// //   Boolean
+// // }
+
+// model Categories {
+//   id      Int      @id @default(autoincrement())
+//   name    String
+//   gadgets Gadget[]
+// }
+
+// model Gadget {
+//   id            Int     @id @default(autoincrement())
+//   name          String
+//   price         Int
+//   discountPrice Int?
+//   guarantee     Int
+//   rating        Float
+//   countReview   Int
+//   isAvailable   Boolean
+//   storeAddress  String?
+//   color         String
+//   brand         String
+//   country       String
+
+//   categoryId Int
+//   category   Categories @relation(fields: [categoryId], references: [id])
+
+//   images Images[]
+
+//   gadgetSpecialCharacteristics GadgetSpecialCharacteristics[]
+// }
+
+// model Images {
+//   id        Int    @id @default(autoincrement())
+//   gadget    Gadget @relation(fields: [gadgetId], references: [id])
+//   gadgetId  Int
+//   imageLink String
+// }
+
+// model Characteristics {
+//   id                           Int                            @id @default(autoincrement())
+//   name                         String
+//   unitType                     String
+//   gadgetSpecialCharacteristics GadgetSpecialCharacteristics[]
+// }
+
+// model GadgetSpecialCharacteristics {
+//   id                Int             @id @default(autoincrement())
+//   gadget            Gadget          @relation(fields: [gadgetId], references: [id])
+//   gadgetId          Int
+//   characteristics   Characteristics @relation(fields: [characteristicsId], references: [id])
+//   characteristicsId Int
+//   value             String
+// }
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,15 +81,15 @@ datasource db {
 //   Boolean
 // }
 
-model Categories {
-  id      Int      @id @default(autoincrement())
-  name    String
-  gadgets Gadget[]
+model categories {
+  id       Int        @id @default(autoincrement())
+  name     String
+  products products[]
 }
 
-model Gadget {
-  id            Int     @id @default(autoincrement())
-  name          String
+model products {
+  id            Int             @id @default(autoincrement())
+  // name          String
   price         Int
   discountPrice Int?
   guarantee     Int
@@ -33,34 +100,35 @@ model Gadget {
   color         String
   brand         String
   country       String
-
-  categoryId Int
-  category   Categories @relation(fields: [categoryId], references: [id])
-
-  images Images[]
-
-  gadgetSpecialCharacteristics GadgetSpecialCharacteristics[]
+  categoryId    Int
+  category      categories      @relation(fields: [categoryId], references: [id])
+  images        images[]
+  product_types product_types[]
 }
 
-model Images {
-  id        Int    @id @default(autoincrement())
-  gadget    Gadget @relation(fields: [gadgetId], references: [id])
-  gadgetId  Int
-  imageLink String
+model images {
+  id         Int      @id @default(autoincrement())
+  products   products @relation(fields: [productsId], references: [id])
+  productsId Int
+  imageLink  String
 }
 
-model Characteristics {
-  id                           Int                            @id @default(autoincrement())
-  name                         String
-  unitType                     String
-  gadgetSpecialCharacteristics GadgetSpecialCharacteristics[]
+model characteristics {
+  id                         Int                          @id @default(autoincrement())
+  name                       String
+  unitType                   String
+  products_x_characteristics products_x_characteristics[]
 }
 
-model GadgetSpecialCharacteristics {
+model product_types {
+  id         Int      @id @default(autoincrement())
+  products   products @relation(fields: [productsId], references: [id])
+  productsId Int
+}
+
+model products_x_characteristics {
   id                Int             @id @default(autoincrement())
-  gadget            Gadget          @relation(fields: [gadgetId], references: [id])
-  gadgetId          Int
-  characteristics   Characteristics @relation(fields: [characteristicsId], references: [id])
+  characteristics   characteristics @relation(fields: [characteristicsId], references: [id])
   characteristicsId Int
   value             String
 }

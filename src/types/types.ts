@@ -11,3 +11,5 @@ export interface Gadget {
     brand: string;
     country: string;
 }
+
+export type ProuductCategories = 'phone' | 'tablet' | 'headphones' | 'computer' | 'accessories'
