@@ -1,41 +1,38 @@
-import { ProuductCategories } from '../../types/types';
 import db from '../db'
 
-export const getAllGadgets = async () => {
+const modifyProducts = (products) => {
+    return products.map(({ category, images, product_types, ...product }) => ({
+        ...product,
+        category: category.name,
+        images: images.map(image => ({ id: image.id, link: image.image_link })),
+        characteristics: product_types.products_x_characteristics.map(productCharacteristic => ({
+            id: productCharacteristic.id,
+            characteristic: productCharacteristic.characteristics.name,
+            unit_type: productCharacteristic.characteristics.unit_type,
+            value: productCharacteristic.value
+        }))
+    }));
+}
+
+export const getProducts = async () => {
     try {
-        const gadgets = await db.gadget.findMany({
+        const products = await db.products.findMany({
             include: {
                 category: true,
                 images: true,
-                gadgetSpecialCharacteristics: {
+                product_types: {
                     include: {
-                        characteristics: true
+                        products_x_characteristics: {
+                            include: {
+                                characteristics: true
+                            }
+                        }
                     }
                 }
             }
         });
 
-        const changedGadgets = gadgets.map(gadget => {
-            const transformedCharacteristics = gadget.gadgetSpecialCharacteristics.map(characteristic => ({
-                id: characteristic.id,
-                characteristics: characteristic.characteristics.name,
-                value: characteristic.value,
-                unitType: characteristic.characteristics.unitType
-            }))
-
-            const transformedImages = gadget.images.map(image => ({
-                id: image.id,
-                imageLink: image.imageLink
-            }))
-
-            return {
-                ...gadget,
-                images: transformedImages,
-                gadgetSpecialCharacteristics: transformedCharacteristics
-            };
-        });
-
-        return changedGadgets;
+        return modifyProducts(products);
     } catch (e) {
         return { message: `get all products error: ${e}` };
     } finally {
@@ -43,89 +40,61 @@ export const getAllGadgets = async () => {
     }
 }
 
-export const getAllProcuctsByCategory = async (category: ProuductCategories) => {
+export const getProductsByCategory = async (categoryId: number) => {
     try {
-        const products = await db.gadget.findMany({
+        const products = await db.products.findMany({
             where: {
                 category: {
-                    name: category
+                    id: categoryId
                 }
             },
             include: {
                 category: true,
                 images: true,
-                gadgetSpecialCharacteristics: {
+                product_types: {
                     include: {
-                        characteristics: true
+                        products_x_characteristics: {
+                            include: {
+                                characteristics: true
+                            }
+                        }
                     }
                 }
             }
-        })
-
-        const changedProducts = products.map(product => {
-            const transformedCharacteristics = product.gadgetSpecialCharacteristics.map(characteristic => ({
-                id: characteristic.id,
-                characteristics: characteristic.characteristics.name,
-                value: characteristic.value,
-                unitType: characteristic.characteristics.unitType
-            }))
-
-            const transformedImages = product.images.map(image => ({
-                id: image.id,
-                imageLink: image.imageLink
-            }))
-
-            return {
-                ...product,
-                images: transformedImages,
-                gadgetSpecialCharacteristics: transformedCharacteristics
-            };
         });
 
-        return changedProducts;
+        return modifyProducts(products);
     } catch (e) {
-        return { message: `get all products with ${category} category error: ${e}` };
+        return { message: `get all products error: ${e}` };
     } finally {
         await db.$disconnect();
     }
 }
 
-export const getProcuctById = async (id: number) => {
+export const getProductById = async (id: number) => {
     try {
-        const product = await db.gadget.findUnique({
+        const product = await db.products.findUnique({
             where: {
-                id
+                id: id
             },
             include: {
                 category: true,
                 images: true,
-                gadgetSpecialCharacteristics: {
+                product_types: {
                     include: {
-                        characteristics: true
+                        products_x_characteristics: {
+                            include: {
+                                characteristics: true
+                            }
+                        }
                     }
                 }
             }
-        })
+        });
 
-        const transformedCharacteristics = product.gadgetSpecialCharacteristics.map(characteristic => ({
-            id: characteristic.id,
-            characteristics: characteristic.characteristics.name,
-            value: characteristic.value,
-            unitType: characteristic.characteristics.unitType
-        }))
-
-        const transformedImages = product.images.map(image => ({
-            id: image.id,
-            imageLink: image.imageLink
-        }))
-
-        return {
-            ...product,
-            images: transformedImages,
-            gadgetSpecialCharacteristics: transformedCharacteristics
-        };
+        return modifyProducts([product])[0];
     } catch (e) {
-        return { message: `get products with ${id} id error: ${e}` };
+        return { message: `get all products error: ${e}` };
     } finally {
         await db.$disconnect();
     }

@@ -21,47 +21,50 @@ model categories {
 }
 
 model products {
-  id            Int             @id @default(autoincrement())
-  // name          String
-  price         Int
-  discountPrice Int?
-  guarantee     Int
-  rating        Float
-  countReview   Int
-  isAvailable   Boolean
-  storeAddress  String?
-  color         String
-  brand         String
-  country       String
-  categoryId    Int
-  category      categories      @relation(fields: [categoryId], references: [id])
-  images        images[]
-  product_types product_types[]
+  id              Int           @id @default(autoincrement())
+  price           Int
+  discount_price  Int?
+  guarantee       Int
+  rating          Float
+  count_review    Int
+  is_available    Boolean
+  store_address   String?
+  color           String
+  brand           String
+  country         String
+  category_id     Int
+  category        categories    @relation(fields: [category_id], references: [id])
+  images          images[]
+  product_type_id Int
+  product_types   product_types @relation(fields: [product_type_id], references: [id])
 }
 
 model images {
-  id         Int      @id @default(autoincrement())
-  products   products @relation(fields: [productsId], references: [id])
-  productsId Int
-  imageLink  String
+  id          Int      @id @default(autoincrement())
+  products    products @relation(fields: [products_id], references: [id])
+  products_id Int
+  image_link  String
+}
+
+model product_types {
+  id                         Int                          @id @default(autoincrement())
+  product_name               String
+  products                   products[]
+  products_x_characteristics products_x_characteristics[]
+}
+
+model products_x_characteristics {
+  id                 Int             @id @default(autoincrement())
+  characteristics    characteristics @relation(fields: [characteristics_id], references: [id])
+  characteristics_id Int
+  product_types      product_types   @relation(fields: [product_types_id], references: [id])
+  product_types_id   Int
+  value              String
 }
 
 model characteristics {
   id                         Int                          @id @default(autoincrement())
   name                       String
-  unitType                   String
+  unit_type                  String
   products_x_characteristics products_x_characteristics[]
-}
-
-model product_types {
-  id         Int      @id @default(autoincrement())
-  products   products @relation(fields: [productsId], references: [id])
-  productsId Int
-}
-
-model products_x_characteristics {
-  id                Int             @id @default(autoincrement())
-  characteristics   characteristics @relation(fields: [characteristicsId], references: [id])
-  characteristicsId Int
-  value             String
 }
