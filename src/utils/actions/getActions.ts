@@ -65,7 +65,7 @@ export const getProductsByCategory = async (categoryId: number) => {
 
         return modifyProducts(products);
     } catch (e) {
-        return { message: `get all products error: ${e}` };
+        return { message: `get all products by category error: ${e}` };
     } finally {
         await db.$disconnect();
     }
@@ -94,7 +94,7 @@ export const getProductById = async (id: number) => {
 
         return modifyProducts([product])[0];
     } catch (e) {
-        return { message: `get all products error: ${e}` };
+        return { message: `get product by id error: ${e}` };
     } finally {
         await db.$disconnect();
     }
