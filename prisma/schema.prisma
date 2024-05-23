@@ -51,14 +51,15 @@ model product_types {
   product_name               String
   products                   products[]
   products_x_characteristics products_x_characteristics[]
+
 }
 
 model products_x_characteristics {
   id                 Int             @id @default(autoincrement())
   characteristics    characteristics @relation(fields: [characteristics_id], references: [id])
   characteristics_id Int
-  product_types      product_types   @relation(fields: [product_types_id], references: [id])
   product_types_id   Int
+  product_types      product_types   @relation(fields: [product_types_id], references: [id])
   value              String
 }
 
