@@ -8,7 +8,7 @@
     "start": "nodemon src/index.ts",
     "dev": "ts-node src/index.ts",
     "build": "tsc",
-    "serve": "node dist/index.js"
+    "serve": "DATABASE_URL=file:./dev.db node dist/index.js"
   },
   "keywords": [],
   "author": "",
