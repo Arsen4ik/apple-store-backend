@@ -11,5 +11,5 @@
 //     brand: string;
 //     country: string;
 // }
-
 // export type ProuductCategories = 'phone' | 'tablet' | 'headphones' | 'computer' | 'accessories'
+//# sourceMappingURL=types.js.map

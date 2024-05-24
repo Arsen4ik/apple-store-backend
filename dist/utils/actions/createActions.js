@@ -1,7 +1,5 @@
 // import { Gadget } from '../../types/types';
 // import db from '../db'
-
-
 // export const createCategory = async (category: string) => {
 //     try {
 //         const newCategory = await db.categories.create({
@@ -16,7 +14,6 @@
 //         await db.$disconnect();
 //     }
 // }
-
 // export const createCharacteristic = async (characteristic: string, unitType: string) => {
 //     try {
 //         const newCharacteristic = await db.characteristics.create({
@@ -32,7 +29,6 @@
 //         await db.$disconnect();
 //     }
 // }
-
 // export const createGadget = async (gadget: Gadget, categoryId: number) => {
 //     try {
 //         const categoryToFind = await db.categories.findUnique({
@@ -56,7 +52,6 @@
 //         await db.$disconnect();
 //     }
 // }
-
 // export const createImage = async (imageLink: string, gadgetId: number) => {
 //     try {
 //         const gadgetToFind = await db.gadget.findUnique({
@@ -80,7 +75,6 @@
 //         await db.$disconnect();
 //     }
 // }
-
 // export const createGadgetSpecialCharacteristics = async (value: string, gadgetId: number, characteristicId) => {
 //     try {
 //         const gadgetToFind = await db.gadget.findUnique({
@@ -113,3 +107,4 @@
 //         await db.$disconnect();
 //     }
 // }
+//# sourceMappingURL=createActions.js.map
