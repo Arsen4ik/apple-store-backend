@@ -18,3 +18,6 @@ usage:
 
   get some category by id (all phones):
     http://localhost:1452/api/category/2
+
+  get some image example: 
+    http://localhost:1452/image/iphone_se_2022_white.jpg
