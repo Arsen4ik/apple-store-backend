@@ -4,9 +4,8 @@ const modifyProducts = (products) => {
     return products.map(({ category, images, product_types, ...product }) => ({
         ...product,
         category: category.name,
-        images: images.map(image => ({ id: image.id, link: image.image_link })),
+        images: images.map(image => `image/${image.image_link}/jpg`),
         characteristics: product_types.products_x_characteristics.map(productCharacteristic => ({
-            id: productCharacteristic.id,
             characteristic: productCharacteristic.characteristics.name,
             unit_type: productCharacteristic.characteristics.unit_type,
             value: productCharacteristic.value
