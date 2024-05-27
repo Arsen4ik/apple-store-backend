@@ -66,8 +66,7 @@ var db_1 = __importDefault(require("../db"));
 var modifyProducts = function (products) {
     return products.map(function (_a) {
         var category = _a.category, images = _a.images, product_types = _a.product_types, product = __rest(_a, ["category", "images", "product_types"]);
-        return (__assign(__assign({}, product), { category: category.name, images: images.map(function (image) { return ({ id: image.id, link: image.image_link }); }), characteristics: product_types.products_x_characteristics.map(function (productCharacteristic) { return ({
-                id: productCharacteristic.id,
+        return (__assign(__assign({}, product), { category: category.name, images: images.map(function (image) { return "image/".concat(image.image_link, "/jpg"); }), characteristics: product_types.products_x_characteristics.map(function (productCharacteristic) { return ({
                 characteristic: productCharacteristic.characteristics.name,
                 unit_type: productCharacteristic.characteristics.unit_type,
                 value: productCharacteristic.value
