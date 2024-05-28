@@ -1,9 +1,10 @@
 import db from '../db'
 
 const modifyProducts = (products) => {
-    return products.map(({ category, images, product_types, ...product }) => ({
+    return products.map(({ category, images, product_types, product_type_id, category_id, ...product }) => ({
         ...product,
         category: category.name,
+        name: product_types.product_name,
         images: images.map(image => `image/${image.image_link}/jpg`),
         characteristics: product_types.products_x_characteristics.map(productCharacteristic => ({
             characteristic: productCharacteristic.characteristics.name,
@@ -30,7 +31,6 @@ export const getProducts = async () => {
                 }
             }
         });
-
         return modifyProducts(products);
     } catch (e) {
         return { message: `get all products error: ${e}` };
@@ -90,7 +90,6 @@ export const getProductById = async (id: number) => {
                 }
             }
         });
-
         return modifyProducts([product])[0];
     } catch (e) {
         return { message: `get product by id error: ${e}` };
