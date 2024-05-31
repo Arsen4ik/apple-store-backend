@@ -5,8 +5,10 @@
   "main": "src/server.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon src/index.ts",
-    "dev": "ts-node src/index.ts"
+    "start": "DATABASE_URL=file:./dev.db nodemon src/index.ts",
+    "dev": "ts-node src/index.ts",
+    "build": "tsc",
+    "serve": "node dist/index.js"
   },
   "keywords": [],
   "author": "",
