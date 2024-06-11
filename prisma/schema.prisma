@@ -22,6 +22,7 @@ model categories {
 
 model products {
   id              Int           @id @default(autoincrement())
+  createdAt       String
   price           Int
   discount_price  Int?
   guarantee       Int
@@ -51,7 +52,6 @@ model product_types {
   product_name               String
   products                   products[]
   products_x_characteristics products_x_characteristics[]
-
 }
 
 model products_x_characteristics {

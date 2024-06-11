@@ -7,6 +7,7 @@ CREATE TABLE "categories" (
 -- CreateTable
 CREATE TABLE "products" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "createdAt" DATETIME NOT NULL,
     "price" INTEGER NOT NULL,
     "discount_price" INTEGER,
     "guarantee" INTEGER NOT NULL,

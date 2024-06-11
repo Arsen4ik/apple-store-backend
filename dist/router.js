@@ -56,10 +56,16 @@ router.get('/products', function (_, res) { return __awaiter(void 0, void 0, voi
     });
 }); });
 router.get('/category/:id', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var data;
+    var categoryId, data;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, (0, actions_1.getProductsByCategory)(+req.params.id)];
+            case 0:
+                categoryId = +req.params.id;
+                if (categoryId <= 0 || !Number.isInteger(categoryId)) {
+                    res.send('category ID is invalid');
+                    return [2 /*return*/];
+                }
+                return [4 /*yield*/, (0, actions_1.getProductsByCategory)(categoryId)];
             case 1:
                 data = _a.sent();
                 res.json(data);
@@ -68,10 +74,52 @@ router.get('/category/:id', function (req, res) { return __awaiter(void 0, void 
     });
 }); });
 router.get('/products/:id', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var data;
+    var productId, data;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, (0, actions_1.getProductById)(+req.params.id)];
+            case 0:
+                productId = +req.params.id;
+                if (productId <= 0 || !Number.isInteger(productId)) {
+                    res.send('product ID is invalid');
+                    return [2 /*return*/];
+                }
+                return [4 /*yield*/, (0, actions_1.getProductById)(productId)];
+            case 1:
+                data = _a.sent();
+                res.json(data);
+                return [2 /*return*/];
+        }
+    });
+}); });
+router.get('/subcategory', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var categoryId, data;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                categoryId = +req.query.category;
+                if (categoryId <= 0 || !Number.isInteger(categoryId)) {
+                    res.send('category ID is invalid');
+                    return [2 /*return*/];
+                }
+                return [4 /*yield*/, (0, actions_1.getSubcategoriesByCategory)(categoryId)];
+            case 1:
+                data = _a.sent();
+                res.json(data);
+                return [2 /*return*/];
+        }
+    });
+}); });
+router.get('/subcategory/:id', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var subcategoryId, data;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                subcategoryId = +req.params.id;
+                if (subcategoryId <= 0 || !Number.isInteger(subcategoryId)) {
+                    res.send('subcategory ID is invalid');
+                    return [2 /*return*/];
+                }
+                return [4 /*yield*/, (0, actions_1.getProductsBySubcategory)(subcategoryId)];
             case 1:
                 data = _a.sent();
                 res.json(data);
