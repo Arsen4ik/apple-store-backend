@@ -22,6 +22,11 @@ usage:
   get some image example: 
     http://localhost:1452/image/iphone_se_2022_white.jpg
 
+  get some subcategories by category id (all subcategories for phones):
+    http://localhost:1452/api/subcategory?category=2
+
+  get some products by subcategory id:
+    http://localhost:1452/api/subcategory/2
 
 P.S.
 
