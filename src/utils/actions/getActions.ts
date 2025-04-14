@@ -70,6 +70,24 @@ export const getProductsByCategory = async (categoryId: number) => {
     }
 }
 
+export const getAllCategories = async () => {
+    try {
+        const categories = await db.categories.findMany({
+            select: {
+                id: true,
+                name: true
+            }
+        });
+
+        return categories;
+    } catch (e) {
+        return { message: `get all categories error: ${e}` };
+    } finally {
+        await db.$disconnect();
+    }
+};
+
+
 export const getProductById = async (id: number) => {
     try {
         const product = await db.products.findUnique({

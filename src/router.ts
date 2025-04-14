@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import { getProducts, getProductsByCategory, getProductById } from './utils/actions'
+import { getAllCategories } from './utils/actions/getActions'
 // import { createCategory, createCharacteristic, createGadget, createGadgetSpecialCharacteristics, createImage, getAllGadgets, getAllProcuctsByCategory, getProcuctById } from './utils/actions'
 
 const router = Router()
@@ -15,6 +16,11 @@ router.get('/products', async (_, res) => {
 
 router.get('/category/:id', async (req, res) => {
     const data = await getProductsByCategory(+req.params.id)
+    res.json(data)
+})
+
+router.get('/category', async (_, res) => {
+    const data = await getAllCategories()
     res.json(data)
 })
 
