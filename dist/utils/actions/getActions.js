@@ -61,7 +61,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getProductsBySubcategory = exports.getSubcategoriesByCategory = exports.getProductById = exports.getProductsByCategory = exports.getProducts = void 0;
+exports.getProductById = exports.getAllCategories = exports.getProductsByCategory = exports.getProducts = void 0;
 var db_1 = __importDefault(require("../db"));
 var modifyProducts = function (products) {
     return products.map(function (_a) {
@@ -72,9 +72,6 @@ var modifyProducts = function (products) {
                 value: productCharacteristic.value
             }); }) }));
     });
-};
-var modifyProductTypes = function (productTypes) {
-    return productTypes.map(function (productType) { return ({ id: productType.id, name: productType.product_name }); });
 };
 var getProducts = function () { return __awaiter(void 0, void 0, void 0, function () {
     var products, e_1;
@@ -153,8 +150,35 @@ var getProductsByCategory = function (categoryId) { return __awaiter(void 0, voi
     });
 }); };
 exports.getProductsByCategory = getProductsByCategory;
+var getAllCategories = function () { return __awaiter(void 0, void 0, void 0, function () {
+    var categories, e_3;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, 3, 5]);
+                return [4 /*yield*/, db_1.default.categories.findMany({
+                        select: {
+                            id: true,
+                            name: true
+                        }
+                    })];
+            case 1:
+                categories = _a.sent();
+                return [2 /*return*/, categories];
+            case 2:
+                e_3 = _a.sent();
+                return [2 /*return*/, { message: "get all categories error: ".concat(e_3) }];
+            case 3: return [4 /*yield*/, db_1.default.$disconnect()];
+            case 4:
+                _a.sent();
+                return [7 /*endfinally*/];
+            case 5: return [2 /*return*/];
+        }
+    });
+}); };
+exports.getAllCategories = getAllCategories;
 var getProductById = function (id) { return __awaiter(void 0, void 0, void 0, function () {
-    var product, e_3;
+    var product, e_4;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -181,8 +205,8 @@ var getProductById = function (id) { return __awaiter(void 0, void 0, void 0, fu
                 product = _a.sent();
                 return [2 /*return*/, modifyProducts([product])[0]];
             case 2:
-                e_3 = _a.sent();
-                return [2 /*return*/, { message: "get product by id error: ".concat(e_3) }];
+                e_4 = _a.sent();
+                return [2 /*return*/, { message: "get product by id error: ".concat(e_4) }];
             case 3: return [4 /*yield*/, db_1.default.$disconnect()];
             case 4:
                 _a.sent();
@@ -192,80 +216,4 @@ var getProductById = function (id) { return __awaiter(void 0, void 0, void 0, fu
     });
 }); };
 exports.getProductById = getProductById;
-var getSubcategoriesByCategory = function (categoryId) { return __awaiter(void 0, void 0, void 0, function () {
-    var productTypes, e_4;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                _a.trys.push([0, 2, 3, 5]);
-                return [4 /*yield*/, db_1.default.product_types.findMany({
-                        where: {
-                            products: {
-                                some: {
-                                    category_id: categoryId
-                                }
-                            }
-                        },
-                        include: {
-                            products_x_characteristics: {
-                                include: {
-                                    characteristics: true
-                                }
-                            }
-                        }
-                    })];
-            case 1:
-                productTypes = _a.sent();
-                return [2 /*return*/, modifyProductTypes(productTypes)];
-            case 2:
-                e_4 = _a.sent();
-                return [2 /*return*/, { message: "get subcategories by category error: ".concat(e_4) }];
-            case 3: return [4 /*yield*/, db_1.default.$disconnect()];
-            case 4:
-                _a.sent();
-                return [7 /*endfinally*/];
-            case 5: return [2 /*return*/];
-        }
-    });
-}); };
-exports.getSubcategoriesByCategory = getSubcategoriesByCategory;
-var getProductsBySubcategory = function (subcategoryId) { return __awaiter(void 0, void 0, void 0, function () {
-    var products, e_5;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                _a.trys.push([0, 2, 3, 5]);
-                return [4 /*yield*/, db_1.default.products.findMany({
-                        where: {
-                            product_type_id: subcategoryId
-                        },
-                        include: {
-                            category: true,
-                            images: true,
-                            product_types: {
-                                include: {
-                                    products_x_characteristics: {
-                                        include: {
-                                            characteristics: true
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    })];
-            case 1:
-                products = _a.sent();
-                return [2 /*return*/, modifyProducts(products)];
-            case 2:
-                e_5 = _a.sent();
-                return [2 /*return*/, { message: "get products by subcategory error: ".concat(e_5) }];
-            case 3: return [4 /*yield*/, db_1.default.$disconnect()];
-            case 4:
-                _a.sent();
-                return [7 /*endfinally*/];
-            case 5: return [2 /*return*/];
-        }
-    });
-}); };
-exports.getProductsBySubcategory = getProductsBySubcategory;
 //# sourceMappingURL=getActions.js.map
